@@ -4,6 +4,10 @@ plugins {
     signing
 }
 
+val pluginVersion: String by project
+val pluginGroupId: String by project
+
+
 android {
     namespace = "it.sephiroth.android.library.asm.trunk.runtime"
     compileSdk {
@@ -47,9 +51,9 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 from(components["release"])
 
-                groupId = "com.github.sephiroth74.Trunk"
+                groupId = pluginGroupId
                 artifactId = "trunk-runtime"
-                version = "0.0.1-SNAPSHOT"
+                version = pluginVersion
             }
         }
     }

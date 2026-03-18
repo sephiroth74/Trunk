@@ -1,4 +1,5 @@
 import org.gradle.kotlin.dsl.provideDelegate
+import java.util.Properties
 
 plugins {
     `java-gradle-plugin`
@@ -6,8 +7,20 @@ plugins {
     kotlin("jvm") version libs.versions.kotlin
 }
 
-group = "com.github.sephiroth74.Trunk"
-version = "0.0.1-SNAPSHOT"
+val rootProperties = Properties().apply {
+    val propertiesFile = file("../gradle.properties")
+    if (propertiesFile.exists()) {
+        propertiesFile.inputStream().use { load(it) }
+    }
+}
+
+val pluginVersion = rootProperties.getProperty("pluginVersion") ?: "0.0.1-SNAPSHOT"
+val pluginGroupId = rootProperties.getProperty("pluginGroupId") ?: "com.github.sephiroth74.Trunk"
+
+
+group = pluginGroupId
+version = pluginVersion
+
 
 gradlePlugin {
     plugins {
