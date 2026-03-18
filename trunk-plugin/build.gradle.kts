@@ -6,8 +6,8 @@ plugins {
     kotlin("jvm") version libs.versions.kotlin
 }
 
-group = "com.github.sephiroth74"
-version = "3.0.0"
+group = "com.github.sephiroth74.Trunk"
+version = "0.0.1-SNAPSHOT"
 
 gradlePlugin {
     plugins {

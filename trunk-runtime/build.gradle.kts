@@ -49,7 +49,7 @@ afterEvaluate {
 
                 groupId = "com.github.sephiroth74.Trunk"
                 artifactId = "trunk-runtime"
-                version = "3.0.0"
+                version = "0.0.1-SNAPSHOT"
             }
         }
     }
