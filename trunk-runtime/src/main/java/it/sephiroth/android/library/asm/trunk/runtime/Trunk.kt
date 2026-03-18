@@ -22,6 +22,8 @@ object Trunk {
     private const val MAX_LOG_LENGTH = 4000
     private const val MAX_TAG_LENGTH = 23
 
+    const val BUILD_DATE = it.sephiroth.android.library.asm.trunk.runtime.BuildConfig.BUILD_DATE
+
     /**
      * Can be replaced at runtime to enable/disable logging
      */

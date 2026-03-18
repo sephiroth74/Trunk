@@ -1,5 +1,4 @@
 jdk:
   - openjdk17
 install:
-  - ./gradlew :trunk-plugin:publishToMavenLocal
-  - ./gradlew :trunk-runtime:publishToMavenLocal
+  - ./gradlew :trunk-runtime:publishToMavenLocal :trunk-plugin:publishToMavenLocal

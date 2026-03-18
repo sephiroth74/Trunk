@@ -1,11 +1,13 @@
+import it.sephiroth.android.library.asm.trunk.AsmLoggingPluginExtension
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
-    id("it.sephiroth.android.library.asm.trunk.plugin")
+    alias(libs.plugins.trunk)
 }
 
-trunk {
+configure<AsmLoggingPluginExtension> {
     enabled = true
 }
 
@@ -59,5 +61,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    implementation(project(":trunk-runtime"))
+    implementation(libs.trunk.runtime)
+//    implementation(project(":trunk-runtime"))
 }
