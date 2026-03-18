@@ -4,9 +4,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.ksp)
 
-//    alias(libs.plugins.trunk)
-
-    id("it.sephiroth.android.library.asm.trunk.plugin")
+//    alias(libs.plugins.trunk) // uses remote plugin
+    id("it.sephiroth.android.library.asm.trunk.plugin") // uses local plugin
 }
 
 configure<AsmLoggingPluginExtension> {
@@ -53,6 +52,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-//    implementation(libs.trunk.runtime)
-    implementation(project(":trunk-runtime"))
+//    implementation(libs.trunk.runtime) // uses remote plugin
+    implementation(project(":trunk-runtime")) // uses local plugin
 }

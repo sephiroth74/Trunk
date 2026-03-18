@@ -11,13 +11,15 @@ pluginManagement {
         gradlePluginPortal()
         maven { url = uri("https://jitpack.io") }
     }
-    resolutionStrategy {
+
+    // remote plugin resolution strategy
+//    resolutionStrategy {
 //        eachPlugin {
 //            if (requested.id.id == "it.sephiroth.android.library.asm.trunk.plugin") {
 //                useModule("com.github.sephiroth74.Trunk:trunk-plugin:${requested.version}")
 //            }
 //        }
-    }
+//    }
 }
 
 plugins {
