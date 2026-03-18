@@ -4,7 +4,10 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+
     alias(libs.plugins.trunk)
+
+//    id("it.sephiroth.android.library.asm.trunk.plugin")
 }
 
 configure<AsmLoggingPluginExtension> {
