@@ -24,5 +24,5 @@ dependencyResolutionManagement {
 }
 
 
-rootProject.name = "asm-trunk-trunk"
+rootProject.name = "trunk-plugin"
 
