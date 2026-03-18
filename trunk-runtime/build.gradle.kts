@@ -29,6 +29,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
 }
 
 dependencies {
@@ -39,7 +45,9 @@ afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("release") {
-                groupId = "com.github.sephiroth74"
+                from(components["release"])
+
+                groupId = "com.github.sephiroth74.Trunk"
                 artifactId = "trunk-runtime"
                 version = "3.0.0"
             }
