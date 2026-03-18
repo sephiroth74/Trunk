@@ -12,11 +12,11 @@ pluginManagement {
         maven { url = uri("https://jitpack.io") }
     }
     resolutionStrategy {
-        eachPlugin {
-            if (requested.id.id == "it.sephiroth.android.library.asm.trunk.plugin") {
-                useModule("com.github.sephiroth74.Trunk:trunk-plugin:${requested.version}")
-            }
-        }
+//        eachPlugin {
+//            if (requested.id.id == "it.sephiroth.android.library.asm.trunk.plugin") {
+//                useModule("com.github.sephiroth74.Trunk:trunk-plugin:${requested.version}")
+//            }
+//        }
     }
 }
 
@@ -37,4 +37,5 @@ rootProject.name = "Trunk"
 
 includeBuild("trunk-plugin")
 include(":trunk-runtime")
+include(":trunk-lint")
 include(":app")

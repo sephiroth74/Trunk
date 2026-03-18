@@ -14,9 +14,7 @@ val pluginGroupId: String by project
 android {
     namespace = "it.sephiroth.android.library.asm.trunk.runtime"
     compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
+        version = release(35)
     }
 
     defaultConfig {
@@ -58,7 +56,8 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.annotation)
+    lintPublish(project(":trunk-lint"))
 }
 
 afterEvaluate {
