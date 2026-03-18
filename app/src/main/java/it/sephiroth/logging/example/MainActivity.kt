@@ -29,6 +29,7 @@ class MainActivity : ComponentActivity() {
         logger.i("logger message %s", "test")
 
         Trunk.v("test message")
+        Trunk.d("Trunk version is: ${Trunk.BUILD_DATE}")
 
 
 

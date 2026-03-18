@@ -11,7 +11,7 @@ activityCompose = "1.13.0"
 kotlin = "2.3.20"
 ksp = "2.3.6"
 composeBom = "2026.03.00"
-trunk = "0.0.2"
+trunk = "0.0.3" # see jitpack version
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
