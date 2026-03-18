@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
+    `maven-publish`
+    signing
 }
 
 android {
@@ -31,4 +33,16 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                groupId = "com.github.sephiroth74"
+                artifactId = "trunk-runtime"
+                version = "3.0.0"
+            }
+        }
+    }
 }
