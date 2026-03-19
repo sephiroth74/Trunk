@@ -20,6 +20,7 @@ class MainActivity : Activity() {
 
         Trunk.v("test message")
         Trunk.d("Trunk version is: ${Trunk.BUILD_DATE}")
+        Trunk.d("logger tag is: ${logger.tag}")
         Test().test()
 
         Log.v(TAG, "Log message")
