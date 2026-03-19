@@ -94,7 +94,7 @@ class LoggingMethodVisitor(nextVisitor: MethodVisitor, private val className: St
                     }
                 }
             } else {
-                val priority = LogLevel.fromName(name) ?: return
+                val priority = LogLevel.fromName(name) ?: LogLevel.VERBOSE
                 when (descriptor) {
                     "(Ljava/lang/String;[Ljava/lang/Object;)V" -> {
                         super.visitIntInsn(Opcodes.BIPUSH, priority.level)
@@ -144,7 +144,7 @@ class LoggingMethodVisitor(nextVisitor: MethodVisitor, private val className: St
                 }
             }
         } else if (owner == ILOGGER_CLASS_NAME && opcode == Opcodes.INVOKEINTERFACE) {
-            val priority = LogLevel.fromName(name) ?: return
+            val priority = LogLevel.fromName(name) ?: LogLevel.VERBOSE
 
             when (descriptor) {
                 "(Ljava/lang/String;[Ljava/lang/Object;)V" -> {

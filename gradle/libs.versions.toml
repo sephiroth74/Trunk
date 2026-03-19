@@ -9,7 +9,7 @@ espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.10.0"
 kotlin = "2.3.20"
 ksp = "2.3.6"
-trunk = "0.0.3" # see version
+trunk = "0.0.5" # see version
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
