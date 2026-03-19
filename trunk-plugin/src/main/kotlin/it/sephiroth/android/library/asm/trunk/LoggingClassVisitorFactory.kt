@@ -33,10 +33,12 @@ class LoggingClassVisitor(nextVisitor: ClassVisitor, private val className: Stri
 }
 
 
-
 class LoggingMethodVisitor(nextVisitor: MethodVisitor, private val className: String) : MethodVisitor(Opcodes.ASM9, nextVisitor) {
     private var currentLineNumber: Int = -1
     private val logger = LoggerFactory.getLogger(this::class.java)
+
+    private val simpleClassName: String
+        get() = className.substringAfterLast('.').replace('$', '.')
 
     override fun visitLineNumber(line: Int, start: org.objectweb.asm.Label?) {
         currentLineNumber = line
@@ -46,8 +48,6 @@ class LoggingMethodVisitor(nextVisitor: MethodVisitor, private val className: St
     override fun visitMethodInsn(opcode: Int, owner: String?, name: String?, descriptor: String?, isInterface: Boolean) {
 
         if (owner == TRUNK_CLASS_NAME && opcode == Opcodes.INVOKESTATIC) {
-            val simpleClassName = className.substringAfterLast('.').replace('$', '.')
-
             if (name == "once") {
                 when (descriptor) {
                     "(IILjava/lang/String;[Ljava/lang/Object;)V" -> {
@@ -90,14 +90,13 @@ class LoggingMethodVisitor(nextVisitor: MethodVisitor, private val className: St
                     }
 
                     else -> {
-                        logger.warn("Unknown descriptor: $descriptor")
+                        logger.trace("Unknown descriptor: $descriptor")
                     }
                 }
             } else {
-                val priority = LogLevel.fromName(name) ?: LogLevel.VERBOSE
                 when (descriptor) {
                     "(Ljava/lang/String;[Ljava/lang/Object;)V" -> {
-                        super.visitIntInsn(Opcodes.BIPUSH, priority.level)
+                        super.visitIntInsn(Opcodes.BIPUSH, LogLevel.fromName(name).level)
                         super.visitLdcInsn(simpleClassName)
                         super.visitIntInsn(Opcodes.SIPUSH, currentLineNumber)
                         super.visitMethodInsn(
@@ -111,7 +110,7 @@ class LoggingMethodVisitor(nextVisitor: MethodVisitor, private val className: St
                     }
 
                     "(Ljava/lang/Throwable;)V" -> {
-                        super.visitIntInsn(Opcodes.BIPUSH, priority.level)
+                        super.visitIntInsn(Opcodes.BIPUSH, LogLevel.fromName(name).level)
                         super.visitLdcInsn(simpleClassName)
                         super.visitIntInsn(Opcodes.SIPUSH, currentLineNumber)
                         super.visitMethodInsn(
@@ -125,7 +124,7 @@ class LoggingMethodVisitor(nextVisitor: MethodVisitor, private val className: St
                     }
 
                     "(Ljava/lang/Throwable;Ljava/lang/String;[Ljava/lang/Object;)V" -> {
-                        super.visitIntInsn(Opcodes.BIPUSH, priority.level)
+                        super.visitIntInsn(Opcodes.BIPUSH, LogLevel.fromName(name).level)
                         super.visitLdcInsn(simpleClassName)
                         super.visitIntInsn(Opcodes.SIPUSH, currentLineNumber)
                         super.visitMethodInsn(
@@ -139,16 +138,15 @@ class LoggingMethodVisitor(nextVisitor: MethodVisitor, private val className: St
                     }
 
                     else -> {
-                        logger.warn("Unknown descriptor: $descriptor")
+                        logger.trace("Unknown descriptor: $descriptor")
                     }
                 }
             }
         } else if (owner == ILOGGER_CLASS_NAME && opcode == Opcodes.INVOKEINTERFACE) {
-            val priority = LogLevel.fromName(name) ?: LogLevel.VERBOSE
 
             when (descriptor) {
                 "(Ljava/lang/String;[Ljava/lang/Object;)V" -> {
-                    iconst(priority.level)
+                    iconst(LogLevel.fromName(name).level)
                     iconst(currentLineNumber)
                     super.visitMethodInsn(
                         Opcodes.INVOKEINTERFACE,
@@ -161,7 +159,7 @@ class LoggingMethodVisitor(nextVisitor: MethodVisitor, private val className: St
                 }
 
                 "(Ljava/lang/Throwable;Ljava/lang/String;[Ljava/lang/Object;)V" -> {
-                    iconst(priority.level)
+                    iconst(LogLevel.fromName(name).level)
                     iconst(currentLineNumber)
                     super.visitMethodInsn(
                         Opcodes.INVOKEINTERFACE,
@@ -174,7 +172,7 @@ class LoggingMethodVisitor(nextVisitor: MethodVisitor, private val className: St
                 }
 
                 "(Ljava/lang/Throwable;)V" -> {
-                    iconst(priority.level)
+                    iconst(LogLevel.fromName(name).level)
                     iconst(currentLineNumber)
                     super.visitMethodInsn(
                         Opcodes.INVOKEINTERFACE,
@@ -187,7 +185,7 @@ class LoggingMethodVisitor(nextVisitor: MethodVisitor, private val className: St
                 }
 
                 else -> {
-                    logger.warn("Unknown descriptor: $descriptor")
+                    logger.trace("Unknown descriptor: $descriptor")
                 }
             }
         }
@@ -222,9 +220,9 @@ enum class LogLevel(val level: Int, val tag: String) {
     ASSERT(7, "wtf");
 
     companion object {
-        fun fromName(name: String?): LogLevel? {
-            if (name == null) return null
-            return entries.firstOrNull { it.tag == name }
+        fun fromName(name: String?, defaultValue: LogLevel = VERBOSE): LogLevel {
+            if (name == null) return defaultValue
+            return entries.firstOrNull { it.tag == name } ?: defaultValue
         }
     }
 }
