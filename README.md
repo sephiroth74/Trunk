@@ -3,6 +3,8 @@ Android logging plugin and runtime
 
 Trunk is a lightweight Android logging library that uses ASM (Bytecode manipulation) to automatically inject tags and line numbers into your logs at compile time.
 
+[![Release](https://jitpack.io/v/sephiroth74/Trunk.svg)](https://jitpack.io/#sephiroth74/Trunk)
+
 ## How it works
 
 The `trunk-plugin` transforms your code during the build process. When it encounters a call to `Trunk.d("message")`, it automatically:
